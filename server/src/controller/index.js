@@ -27,11 +27,13 @@ const getCountries = async () => {
       })
     );
 
-    const results = await Country.findAll({ include: { model: Activity } });
+    const results = await Country.findAll({
+      include: [{ model: Activity, through: { attributes: [] } }],
+    });
     return results;
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = getCountries;
+module.exports = { getCountries };
