@@ -7,7 +7,7 @@ const server = express();
 
 //    C O R S   M I D D L E W A R E
 let allowCrossDomain = (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http:localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
