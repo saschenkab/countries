@@ -26,7 +26,9 @@ const Home = () => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     if (countriesFiltered === undefined || countriesFiltered === 0) {
-      return countries.slice(firstPageIndex, lastPageIndex);
+      return countries !== undefined
+        ? countries.slice(firstPageIndex, lastPageIndex)
+        : null;
     } else {
       return countriesFiltered.slice(firstPageIndex, lastPageIndex);
     }
@@ -50,16 +52,18 @@ const Home = () => {
     content = (
       <>
         <Cards countries={paginate} />
-        <Pagination
-          currentPage={currentPage}
-          totalCount={
-            countriesFiltered === undefined || countriesFiltered === 0
-              ? countries.length
-              : countriesFiltered.length
-          }
-          pageSize={pageSize}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
+        {countries === undefined ? null : (
+          <Pagination
+            currentPage={currentPage}
+            totalCount={
+              countriesFiltered === undefined || countriesFiltered === 0
+                ? countries.length
+                : countriesFiltered.length
+            }
+            pageSize={pageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </>
     );
   } else if (countriesStatus === "Failed") {
@@ -69,7 +73,6 @@ const Home = () => {
   return (
     <div>
       <Header />
-      {/* <Order /> */}
       <Body>
         <Countries>{content}</Countries>
       </Body>
