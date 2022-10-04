@@ -6,15 +6,26 @@ const Cards = ({ countries }) => {
     <>
       {Array.isArray(countries) && countries.length > 0 ? (
         <CardsWrapper>
-          {countries.map((country) => (
-            <Card
-              key={country.alpha_code}
-              alpha_code={country.alpha_code}
-              flag={country.flag}
-              name={country.name}
-              continent={country.continent}
-            />
-          ))}
+          {countries.length === 1
+            ? countries.map((country) => (
+                <Card
+                  key={country.alpha_code}
+                  alpha_code={country.alpha_code}
+                  flag={country.flag}
+                  name={country.name}
+                  continent={country.continent}
+                  variant='one'
+                />
+              ))
+            : countries.map((country) => (
+                <Card
+                  key={country.alpha_code}
+                  alpha_code={country.alpha_code}
+                  flag={country.flag}
+                  name={country.name}
+                  continent={country.continent}
+                />
+              ))}
         </CardsWrapper>
       ) : (
         <>
