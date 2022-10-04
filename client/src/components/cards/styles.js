@@ -7,15 +7,16 @@ export const CardsWrapper = styled.div`
 `;
 
 export const NoCountries = styled.div`
-  width: 50%;
-  margin: 15rem 45rem;
-  position: fixed;
+  height: 70vh;
+  display: -webkit-box;
+  align-items: center;
+  justify-content: center;
 
   span {
     animation: arrive 1s ease-out 0s normal forwards;
     color: #283618;
     font-family: "Raleway", sans-serif;
-    font-size: 25px;
+    font-size: 27px;
     font-weight: 600;
   }
   span:nth-child(2) {
@@ -71,6 +72,10 @@ export const NoCountries = styled.div`
   span:nth-child(16) {
     color: #283618;
     animation-delay: 0.7s;
+  }
+  span:nth-child(17) {
+    color: #283618;
+    animation-delay: 0.75s;
   }
   span:nth-child(18) {
     color: #283618;
