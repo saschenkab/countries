@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchCountriesByName, clean } from "../../redux/countries/slice";
+import { fetchCountriesByName } from "../../redux/countries/slice";
 import {
   Input,
   NoAutocomplete,
@@ -11,7 +11,7 @@ import {
 
 const Autocomplete = (props) => {
   const regex = "^[a-zA-Z ]*$";
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const [filtered, setFiltered] = useState([]);
   const [isShow, setIsShow] = useState(false);
   const [input, setInput] = useState("");
@@ -40,38 +40,52 @@ const Autocomplete = (props) => {
 
   const ResetHandler = (e) => {
     setInput("");
-    setActive(0);
-    setFiltered([]);
+    setActive(-1);
     setIsShow(false);
-    dispatch(clean());
-    // dispatch(fetchCountriesByName("", dispatch));
   };
+
   const onKeyDown = (e) => {
-    if (e.keyCode === 13) {
+    let suggestion = e.target.value;
+    const { key } = e;
+    let nextIndexCount = 0;
+    if (key === "Enter") {
       // enter key
       setActive(0);
       setIsShow(false);
-      setInput(filtered[active]);
-    } else if (e.keyCode === 38) {
+      setInput(suggestion);
+      dispatch(fetchCountriesByName(suggestion, dispatch));
+    } else if (key === "ArrowUp") {
       // up arrow
-      return active === 1 ? null : setActive(active - 2);
-    } else if (e.keyCode === 40) {
+      setIsShow(true);
+      setInput(filtered[active - 2]);
+      nextIndexCount = active - 1;
+    } else if (key === "ArrowDown") {
       // down arrow
-      return active - 1 === filtered.length ? null : setActive(active + 1);
+      setIsShow(true);
+      setInput(filtered[active]);
+      nextIndexCount = active + 1;
     }
+    setActive(nextIndexCount);
   };
+
   const renderAutocomplete = () => {
     if (isShow && input) {
       if (filtered.length) {
         return (
           <AutocompleteWrapper>
             {filtered.map((suggestion, index) => {
-              let className;
-              if (index === active) {
-                className = "active";
-              }
               return (
-                <li className={className} key={suggestion} onClick={onClick}>
+                <li
+                  key={suggestion}
+                  onClick={onClick}
+                  style={{
+                    boxShadow:
+                      index === active - 1
+                        ? "0px -23px 60px 1px #283618 inset"
+                        : "",
+                    fontWeight: index === active - 1 ? "600" : "",
+                  }}
+                >
                   {suggestion}
                 </li>
               );
@@ -90,15 +104,15 @@ const Autocomplete = (props) => {
         );
       }
     }
-
-    return <></>;
+    // return <></>;
   };
+
   return (
     <InputContainer>
       <Input
         type='text'
         onChange={onChange}
-        onKeyDown={onKeyDown}
+        onKeyDownCapture={onKeyDown}
         value={input}
         placeholder='Search'
         pattern={regex}
@@ -106,7 +120,6 @@ const Autocomplete = (props) => {
         required
       />
       <CloseButton onClick={ResetHandler}>X</CloseButton>
-      {/* </Input> */}
       {renderAutocomplete()}
     </InputContainer>
   );

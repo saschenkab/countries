@@ -12,17 +12,23 @@ export const CloseButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: red;
+  color: #c94242;
   position: relative;
   right: 6%;
-  background-color: wheat;
+  background-color: #edc493;
   padding: 1px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   font-family: "Raleway", sans-serif;
+  font-weight: 600;
   visibility: hidden;
   opacity: 0;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: -0px 0px 2px 1px #b5834a;
+  }
 `;
 
 export const AutocompleteWrapper = styled.ul`
@@ -54,12 +60,7 @@ export const AutocompleteWrapper = styled.ul`
     width: 395px;
   }
 
-  &.active {
-    background-color: #f5f5f5;
-  }
-
-  &.active,
-  li:hover {
+  > li:hover {
     cursor: pointer;
     font-weight: 600;
     box-shadow: 0px -23px 60px 1px #283618 inset;
