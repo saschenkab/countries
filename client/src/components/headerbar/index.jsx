@@ -14,7 +14,9 @@ const Header = () => {
     dispatch(clean());
   };
 
-  const countriesAutocomplete = countries.map((country) => country.name);
+  const countriesAutocomplete = countries
+    ? countries.map((country) => country.name)
+    : null;
 
   return (
     <>

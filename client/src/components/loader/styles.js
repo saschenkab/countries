@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 150px;
-  height: 70px;
+  height: 70vh;
+  display: -webkit-box;
   line-height: 50px;
   text-align: center;
-  margin: 15rem 50rem;
-  position: fixed;
+  align-items: center;
+  justify-content: center;
 
   span {
     display: inline-block;
