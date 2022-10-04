@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useMemo } from "react";
 import {
   fetchCountries,
   selectAllCountries,
@@ -6,11 +7,11 @@ import {
   getCountriesError,
   getCountriesStatus,
 } from "../../redux/countries/slice";
-import { useEffect } from "react";
 import Cards from "../../components/cards";
 import { Body, Countries } from "./styles";
 import Header from "../../components/headerbar";
 import Loader from "../../components/loader";
+import Pagination from "../../components/pagination";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,18 @@ const Home = () => {
   const countriesFiltered = useSelector(getAllCountriesFiltered);
   const countriesStatus = useSelector(getCountriesStatus);
   const error = useSelector(getCountriesError);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 9;
+
+  const paginate = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    if (countriesFiltered === undefined || countriesFiltered === 0) {
+      return countries.slice(firstPageIndex, lastPageIndex);
+    } else {
+      return countriesFiltered.slice(firstPageIndex, lastPageIndex);
+    }
+  }, [currentPage, countriesFiltered, countries]);
 
   useEffect(() => {
     if (countriesStatus === "Idle") {
@@ -25,15 +38,29 @@ const Home = () => {
     }
   }, [countriesStatus, dispatch]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [countriesFiltered]);
+
   let content;
 
   if (countriesStatus === "Loading") {
     content = <Loader />;
   } else if (countriesStatus === "Succeeded") {
     content = (
-      <Cards
-        countries={countriesFiltered.length > 0 ? countriesFiltered : countries}
-      />
+      <>
+        <Cards countries={paginate} />
+        <Pagination
+          currentPage={currentPage}
+          totalCount={
+            countriesFiltered === undefined || countriesFiltered === 0
+              ? countries.length
+              : countriesFiltered.length
+          }
+          pageSize={pageSize}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </>
     );
   } else if (countriesStatus === "Failed") {
     content = <p>{error}</p>;
@@ -42,6 +69,7 @@ const Home = () => {
   return (
     <div>
       <Header />
+      {/* <Order /> */}
       <Body>
         <Countries>{content}</Countries>
       </Body>
