@@ -14,7 +14,7 @@ const Header = () => {
     dispatch(clean());
   };
 
-  const countriesAutocomplete = countries
+  const autocomplete = countries
     ? countries.map((country) => country.name)
     : null;
 
@@ -27,7 +27,7 @@ const Header = () => {
             <h2>Countries</h2>
           </Container>
         </Link>
-        <Autocomplete suggestions={countriesAutocomplete} />
+        <Autocomplete suggestions={autocomplete} />
         <Link to='/activity/addActivity'>
           <Button>Add New Activity</Button>
         </Link>
