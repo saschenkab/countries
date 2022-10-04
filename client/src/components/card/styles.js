@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Flag = styled.img`
   width: 130px;
@@ -6,6 +6,15 @@ export const Flag = styled.img`
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 10px 0.1px rgba(67, 40, 24, 0.2);
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        width: 300px;
+        height: 250px;
+        border-radius: 20px;
+      }
+    `};
 
   @media (max-width: 768px) {
     width: 100px;
@@ -23,6 +32,14 @@ export const CardTitle = styled.h2`
   white-space: wrap;
   font-family: "Raleway", sans-serif;
   text-shadow: -0.5px 0.5px 0px #bb9457;
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        font-size: 30px;
+        text-align: center;
+      }
+    `};
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -42,6 +59,13 @@ export const CardContinent = styled.p`
   font-weight: 400;
   font-family: "Raleway", sans-serif;
   box-shadow: 0 0 10px 0.1px #bb9457;
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        font-size: 16px;
+      }
+    `};
 
   @media (max-width: 768px) {
     font-size: 10px;
@@ -52,6 +76,14 @@ export const AlphaCode = styled.div`
   width: fit-content;
   letter-spacing: 1.4px;
   font-size: 15px;
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        font-size: 30px;
+        letter-spacing: 9px;
+      }
+    `};
   color: #283618;
   /* text-align: center; */
   font-weight: 500;
@@ -69,6 +101,15 @@ export const CardBody = styled.div`
   align-content: center;
   justify-content: space-between;
   transition: 5s ease-out;
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        align-items: center;
+        position: relative;
+        top: -4%;
+      }
+    `};
 
   @media (max-width: 768px) {
     margin-top: 0;
@@ -90,8 +131,16 @@ export const CardButton = styled.button`
   opacity: 0;
   transition: 0.3s ease-out;
   cursor: pointer;
-  font-family: 500;
   font-family: "Raleway", sans-serif;
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        width: 70%;
+        font-size: 17px;
+        letter-spacing: 1px;
+      }
+    `}
 
   @media (max-width: 768px) {
     width: 100%;
@@ -100,10 +149,20 @@ export const CardButton = styled.button`
 
 export const CardContainer = styled.div`
   width: calc(33.33% - 52px);
+  ${(props) =>
+    props.variant &&
+    css`
+      & {
+        width: calc(35%);
+        height: 500px;
+        justify-content: center;
+        flex-direction: column;
+      }
+    `};
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  height: 160px;
+  height: 170px;
   border-radius: 40px;
   position: relative;
   box-shadow: 0 0 10px 0.1px #bb9457;
@@ -112,9 +171,10 @@ export const CardContainer = styled.div`
   margin: 15px;
   padding: 10px;
   will-change: contents;
-  animation: myAnim 1s ease-out 1s 1 normal backwards;
+  animation: zoom 1s ease-out 1s 1 normal backwards;
+  transition: 0.3s ease-out;
 
-  @keyframes myAnim {
+  @keyframes zoom {
     0% {
       opacity: 0;
     }
@@ -134,6 +194,7 @@ export const CardContainer = styled.div`
   }
   ${CardButton}:hover {
     background-color: #9c6644;
+    font-weight: 600;
   }
 
   @media (max-width: 1100px) {

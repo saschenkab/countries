@@ -9,18 +9,18 @@ import {
   AlphaCode,
 } from "./styles";
 
-const Card = ({ alpha_code, flag, name, continent }) => {
+const Card = ({ alpha_code, flag, name, continent, variant }) => {
   return (
-    <CardContainer>
-      <CardBody>
-        <AlphaCode>{alpha_code}</AlphaCode>
-        <CardTitle>{name}</CardTitle>
-        <CardContinent>{continent}</CardContinent>
+    <CardContainer variant={variant}>
+      <CardBody variant={variant}>
+        <AlphaCode variant={variant}>{alpha_code}</AlphaCode>
+        <CardTitle variant={variant}>{name}</CardTitle>
+        <CardContinent variant={variant}>{continent}</CardContinent>
       </CardBody>
       <Link to={`/country/${alpha_code}`}>
-        <CardButton>More info</CardButton>
+        <CardButton variant={variant}>More info</CardButton>
       </Link>
-      <Flag src={flag} alt={name} />
+      <Flag variant={variant} src={flag} alt={name} />
     </CardContainer>
   );
 };
