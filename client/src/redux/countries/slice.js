@@ -30,7 +30,6 @@ export const fetchCountriesByName = createAsyncThunk(
   async (name) => {
     try {
       const response = (await axios.get(COUNTRIES_BY_NAME + name)).data;
-      console.log("🚀 ~ file: slice.js ~ line 33 ~ response", response);
       return response;
     } catch (error) {
       console.log(error);
@@ -39,18 +38,61 @@ export const fetchCountriesByName = createAsyncThunk(
   }
 );
 
-// export const userDiveLogList = (userId) => {
-//   return axios.get(API_URL + `userdiveloglist/${userId}`);
-// };
-
 const countriesSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {
-    clean: {
-      reducer(state, action) {
-        state.countriesFiltered = [];
-      },
+    clean(state, action) {
+      return initialState;
+    },
+    orderByName(state, action) {
+      const order = [...state.countriesFiltered];
+
+      const countriesOrderedByName = order.sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+
+        if (nameA < nameB) {
+          if (action.payload === "a-z") {
+            return -1; // a comes before b in the sort order
+          } else {
+            return 1;
+          }
+        }
+
+        if (nameA > nameB) {
+          if (action.payload === "z-a") {
+            return -1; // b comes before a in the sort order
+          } else {
+            return 1;
+          }
+        }
+        return 0;
+      });
+      state.countriesFiltered = countriesOrderedByName;
+    },
+    orderByPopulation(state, action) {
+      const order = [...state.countriesFiltered];
+
+      const countriesOrderedByPopulation = order.sort((a, b) => {
+        if (a.population < b.population) {
+          if (action.payload === "desc") {
+            return -1; // a comes before b in the sort order
+          } else {
+            return 1;
+          }
+        }
+
+        if (a.population > b.population) {
+          if (action.payload === "asc") {
+            return -1; // b comes before a in the sort order
+          } else {
+            return 1;
+          }
+        }
+        return 0;
+      });
+      state.countriesFiltered = countriesOrderedByPopulation;
     },
   },
   extraReducers(builder) {
@@ -58,14 +100,14 @@ const countriesSlice = createSlice({
       .addCase(fetchCountries.pending, (state, action) => {
         state.status = "Loading";
       })
-      .addCase(fetchCountriesByName.pending, (state, action) => {
-        state.status = "Loading";
-      })
       .addCase(fetchCountries.fulfilled, (state, action) => {
         state.status = "Succeeded";
 
         state.countries = action.payload.data;
         state.countriesFiltered = action.payload.data;
+      })
+      .addCase(fetchCountriesByName.pending, (state, action) => {
+        state.status = "Loading";
       })
       .addCase(fetchCountriesByName.fulfilled, (state, action) => {
         state.status = "Succeeded";
@@ -84,6 +126,6 @@ export const getAllCountriesFiltered = (state) =>
   state.countries.countriesFiltered;
 export const getCountriesStatus = (state) => state.countries.status;
 export const getCountriesError = (state) => state.countries.error;
-export const { clean } = countriesSlice.actions;
+export const { clean, orderByName, orderByPopulation } = countriesSlice.actions;
 
 export default countriesSlice.reducer;
