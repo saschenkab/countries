@@ -12,12 +12,18 @@ import { Body, Countries } from "./styles";
 import Header from "../../components/headerbar";
 import Loader from "../../components/loader";
 import Pagination from "../../components/pagination";
+import Filters from "../../components/filters";
+import {
+  getActivitiesStatus,
+  fetchActivities,
+} from "../../redux/activities/slice";
 
 const Home = () => {
   const dispatch = useDispatch();
   const countries = useSelector(selectAllCountries);
   const countriesFiltered = useSelector(getAllCountriesFiltered);
   const countriesStatus = useSelector(getCountriesStatus);
+  const activitiesStatus = useSelector(getActivitiesStatus);
   const error = useSelector(getCountriesError);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
@@ -25,20 +31,21 @@ const Home = () => {
   const paginate = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    if (countriesFiltered === undefined || countriesFiltered === 0) {
-      return countries !== undefined
-        ? countries.slice(firstPageIndex, lastPageIndex)
-        : null;
+    if (countriesFiltered === undefined || countriesFiltered.length === 0) {
+      return countries ? countries.slice(firstPageIndex, lastPageIndex) : null;
     } else {
-      return countriesFiltered.slice(firstPageIndex, lastPageIndex);
+      return countriesFiltered
+        ? countriesFiltered.slice(firstPageIndex, lastPageIndex)
+        : null;
     }
   }, [currentPage, countriesFiltered, countries]);
 
   useEffect(() => {
-    if (countriesStatus === "Idle") {
+    if (countriesStatus === "Idle" && activitiesStatus === "Idle") {
       dispatch(fetchCountries());
+      dispatch(fetchActivities());
     }
-  }, [countriesStatus, dispatch]);
+  }, [countriesStatus, activitiesStatus, dispatch]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -75,6 +82,7 @@ const Home = () => {
       <Header />
       <Body>
         <Countries>{content}</Countries>
+        <Filters />
       </Body>
     </div>
   );
