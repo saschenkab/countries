@@ -13,6 +13,7 @@ const initialState = {
   status: "Idle",
   error: null,
   selectedContinent: "All Continents",
+  selectedActivity: "All Activities",
 };
 
 export const fetchCountries = createAsyncThunk("/countries", async () => {
@@ -43,7 +44,8 @@ const countriesSlice = createSlice({
   initialState,
   reducers: {
     clean(state, action) {
-      return initialState;
+      state.countriesFiltered = [];
+      state.country = {};
     },
     orderByName(state, action) {
       const order = [...state.countriesFiltered];
@@ -94,6 +96,22 @@ const countriesSlice = createSlice({
       });
       state.countriesFiltered = countriesOrderedByPopulation;
     },
+    filterByActivityOrContinent(state, action) {
+      const countries = [...state.countries];
+      const continentFilter = action.payload.continentFilter;
+      const activityFilter = action.payload.activityFilter;
+      let result = countries;
+
+      if (activityFilter && activityFilter !== "All Activities") {
+        result = result.filter((country) =>
+          country.activities.some((activity) => {
+            return activity.name === activityFilter;
+          })
+        );
+      }
+      state.countriesFiltered = result;
+      state.selectedActivity = action.payload.activityFilter;
+    },
   },
   extraReducers(builder) {
     builder
@@ -126,6 +144,13 @@ export const getAllCountriesFiltered = (state) =>
   state.countries.countriesFiltered;
 export const getCountriesStatus = (state) => state.countries.status;
 export const getCountriesError = (state) => state.countries.error;
-export const { clean, orderByName, orderByPopulation } = countriesSlice.actions;
+export const selectedActivity = (state) => state.countries.selectedActivity;
+export const selectedContinent = (state) => state.countries.selectedContinent;
+export const {
+  clean,
+  orderByName,
+  orderByPopulation,
+  filterByActivityOrContinent,
+} = countriesSlice.actions;
 
 export default countriesSlice.reducer;
