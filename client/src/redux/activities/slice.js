@@ -20,6 +20,15 @@ export const fetchActivities = createAsyncThunk("/activities", async () => {
 const activitiesSlice = createSlice({
   name: "activities",
   initialState,
+  reducers: {
+    cleanState(state, action) {
+      return initialState;
+      // state.countriesFiltered = [];
+      // state.country = {};
+      // state.selectedActivity = "";
+      // state.selectedContinent = "";
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchActivities.pending, (state, action) => {
@@ -39,5 +48,6 @@ const activitiesSlice = createSlice({
 
 export const getActivitiesStatus = (state) => state.activities.status;
 export const getActivities = (state) => state.activities.activities;
+export const { cleanState } = activitiesSlice.actions;
 
 export default activitiesSlice.reducer;
