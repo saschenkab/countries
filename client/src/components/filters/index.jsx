@@ -6,7 +6,6 @@ import {
   selectedActivity,
   selectedContinent,
 } from "../../redux/countries/slice";
-
 import { Container, FiltersStyles, Item, Span } from "./styles";
 
 const Filters = () => {

@@ -1,5 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Raleway:ital,wght@0,300;0,400;0,600;1,300;1,600&display=swap');
+
+::-webkit-scrollbar {
+  width: 1.2vw;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  scrollbar-color: white black ;
+  /* THIS WILL SET THE COLOR OF THE SCROLLBAR TRACK */
+}
+
+/* TO STYLE THE SCROLLBAR THUMB */
+::-webkit-scrollbar-thumb  {
+  background-color: #606c38;
+  border: 0.3vw solid #ffffff;
+  border-radius: 5vw;
+}
+
+
 .App {
   text-align: center;
+    
 }
 
 .App-logo {
@@ -40,4 +61,8 @@
 
 a{
   text-decoration: none; 
+}
+
+body {
+  background-color: #fefae0;
 }
