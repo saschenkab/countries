@@ -12,33 +12,35 @@ export const PaginationItem = styled.li`
   height: 32px;
   text-align: center;
   margin: auto 4px;
-  color: rgba(0, 0, 0, 0.87);
+  color: #283618;
   display: flex;
   box-sizing: border-box;
   align-items: center;
+  font-family: "Marcellus SC", serif;
   letter-spacing: 0.01071em;
   border-radius: 16px;
-  line-height: 1.43;
-  font-size: 13px;
+  font-size: 14px;
   min-width: 32px;
 
   &.selected {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: #879166;
+    font-weight: 600;
+    color: #fefae0;
+    text-shadow: -1px 1px 1.8px #606c38;
   }
 
   &.dots:hover {
-    background-color: transparent;
+    background-color: #d4deb4;
     cursor: default;
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: #d4deb4;
     cursor: pointer;
   }
 
   &.disabled {
     pointer-events: none;
-
     .arrow::before {
       border-right: 0.12em solid rgba(0, 0, 0, 0.43);
       border-top: 0.12em solid rgba(0, 0, 0, 0.43);
