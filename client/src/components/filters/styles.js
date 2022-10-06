@@ -30,6 +30,29 @@ export const FiltersStyles = styled.div`
   }
 `;
 
+export const Item = styled.div`
+  margin: 10px 5px;
+  text-transform: capitalize;
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    width: 9px;
+    height: 50%;
+    background-color: ${(props) => (props.active ? "#283618" : "transparent")};
+    font-weight: 600;
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    border-radius: 50%;
+  }
+
+  span {
+    font-weight: ${(props) => (props.active ? "600" : "400")};
+  }
+`;
+
 export const Span = styled.span`
   margin-left: 10px;
   font-size: 15px;
@@ -39,22 +62,5 @@ export const Span = styled.span`
 
   &:hover {
     font-weight: 600;
-  }
-`;
-
-export const Item = styled.div`
-  margin: 10px 5px;
-  text-transform: capitalize;
-  position: relative;
-  cursor: pointer;
-
-  &::before {
-    content: "";
-    width: 5px;
-    height: 100%;
-    background-color: ${(props) => (props.active ? "#432818" : "transparent")};
-    position: absolute;
-    left: -15px;
-    border-radius: 15px;
   }
 `;
