@@ -7,16 +7,16 @@ import {
   getCountriesError,
   getCountriesStatus,
 } from "../../redux/countries/slice";
-import Cards from "../../components/cards";
-import { Body, Countries } from "./styles";
-import Header from "../../components/headerbar";
-import Loader from "../../components/loader";
-import Pagination from "../../components/pagination";
-import Filters from "../../components/filters";
 import {
   getActivitiesStatus,
   fetchActivities,
 } from "../../redux/activities/slice";
+import Cards from "../../components/cards";
+import Header from "../../components/headerbar";
+import Loader from "../../components/loader";
+import Pagination from "../../components/pagination";
+import Filters from "../../components/filters";
+import { Body, Countries } from "./styles";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -31,14 +31,10 @@ const Home = () => {
   const paginate = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    if (countriesFiltered === undefined || countriesFiltered.length === 0) {
-      return countries ? countries.slice(firstPageIndex, lastPageIndex) : null;
-    } else {
-      return countriesFiltered
-        ? countriesFiltered.slice(firstPageIndex, lastPageIndex)
-        : null;
-    }
-  }, [currentPage, countriesFiltered, countries]);
+    return countriesFiltered
+      ? countriesFiltered.slice(firstPageIndex, lastPageIndex)
+      : null;
+  }, [currentPage, countriesFiltered]);
 
   useEffect(() => {
     if (countriesStatus === "Idle" && activitiesStatus === "Idle") {
@@ -59,7 +55,7 @@ const Home = () => {
     content = (
       <>
         <Cards countries={paginate} />
-        {countries === undefined ? null : (
+        {!countries ? null : (
           <Pagination
             currentPage={currentPage}
             totalCount={
