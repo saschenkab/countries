@@ -46,6 +46,8 @@ const countriesSlice = createSlice({
     clean(state, action) {
       state.countriesFiltered = [];
       state.country = {};
+      state.selectedActivity = "";
+      state.selectedContinent = "";
     },
     orderByName(state, action) {
       const order = [...state.countriesFiltered];
@@ -102,6 +104,12 @@ const countriesSlice = createSlice({
       const activityFilter = action.payload.activityFilter;
       let result = countries;
 
+      if (continentFilter && continentFilter !== "All Continents") {
+        result = result.filter((country) =>
+          country.continent.includes(continentFilter)
+        );
+      }
+
       if (activityFilter && activityFilter !== "All Activities") {
         result = result.filter((country) =>
           country.activities.some((activity) => {
@@ -111,6 +119,7 @@ const countriesSlice = createSlice({
       }
       state.countriesFiltered = result;
       state.selectedActivity = action.payload.activityFilter;
+      state.selectedContinent = action.payload.continentFilter;
     },
   },
   extraReducers(builder) {
@@ -124,6 +133,10 @@ const countriesSlice = createSlice({
         state.countries = action.payload.data;
         state.countriesFiltered = action.payload.data;
       })
+      .addCase(fetchCountries.rejected, (state, action) => {
+        state.status = "Failed";
+        state.error = action.error.message;
+      })
       .addCase(fetchCountriesByName.pending, (state, action) => {
         state.status = "Loading";
       })
@@ -131,10 +144,6 @@ const countriesSlice = createSlice({
         state.status = "Succeeded";
 
         state.countriesFiltered = action.payload.data;
-      })
-      .addCase(fetchCountries.rejected, (state, action) => {
-        state.status = "Failed";
-        state.error = action.error.message;
       });
   },
 });
