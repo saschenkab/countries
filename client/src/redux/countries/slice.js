@@ -12,8 +12,8 @@ const initialState = {
   countriesFiltered: [],
   status: "Idle",
   error: null,
-  selectedContinent: "All Continents",
-  selectedActivity: "All Activities",
+  selectedContinent: "",
+  selectedActivity: "",
 };
 
 export const fetchCountries = createAsyncThunk("/countries", async () => {
