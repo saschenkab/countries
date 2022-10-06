@@ -9,6 +9,7 @@ import { Button, Container } from "./styles";
 import Autocomplete from "../searchbar";
 import Order from "../order";
 import { clean } from "../../redux/countries/slice";
+import { cleanState } from "../../redux/activities/slice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Header = () => {
   const handleChange = () => {
     dispatch(fetchCountries());
     dispatch(clean());
+    dispatch(cleanState());
   };
 
   const autocomplete = countries
