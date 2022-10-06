@@ -5,6 +5,8 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  margin-left: 5px;
+  margin-right: 55px;
 
   h2 {
     font-weight: 600;

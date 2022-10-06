@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectAllCountries } from "../../redux/countries/slice";
+import {
+  fetchCountries,
+  selectAllCountries,
+} from "../../redux/countries/slice";
 import map from "../../utils/photos/map.png";
 import { Button, Container } from "./styles";
 import Autocomplete from "../searchbar";
@@ -11,6 +14,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const countries = useSelector(selectAllCountries);
   const handleChange = () => {
+    dispatch(fetchCountries());
     dispatch(clean());
   };
 
