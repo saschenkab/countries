@@ -44,10 +44,7 @@ const countriesSlice = createSlice({
   initialState,
   reducers: {
     clean(state, action) {
-      state.countriesFiltered = [];
-      state.country = {};
-      state.selectedActivity = "";
-      state.selectedContinent = "";
+      return initialState;
     },
     orderByName(state, action) {
       const order = [...state.countriesFiltered];
