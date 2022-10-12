@@ -10,7 +10,7 @@ import {
 } from "./styles";
 
 const Autocomplete = (props) => {
-  const regex = "^[a-zA-Z ]*$";
+  const regex = "^[a-zA-Z-Å(),éãíç ]*$";
   const [active, setActive] = useState(-1);
   const [filtered, setFiltered] = useState([]);
   const [isShow, setIsShow] = useState(false);
@@ -96,15 +96,14 @@ const Autocomplete = (props) => {
         return (
           <NoAutocomplete>
             {input.match(regex) ? (
-              <em>Not Found</em>
+              <span>Not Found</span>
             ) : (
-              <em>Please enter only letters</em>
+              <span>Please enter only letters</span>
             )}
           </NoAutocomplete>
         );
       }
     }
-    // return <></>;
   };
 
   return (

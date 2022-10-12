@@ -1,19 +1,10 @@
 import styled from "styled-components";
 
-export const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-`;
-
 export const CloseButton = styled.button`
   border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #c94242;
+  align-self: center;
   position: relative;
+  color: #c94242;
   right: 6%;
   background-color: #edc493;
   padding: 1px;
@@ -34,7 +25,6 @@ export const CloseButton = styled.button`
 export const AutocompleteWrapper = styled.ul`
   position: absolute;
   top: 10%;
-  left: 41.2%;
   list-style: none;
   max-height: 117px;
   overflow: scroll;
@@ -72,7 +62,8 @@ export const NoAutocomplete = styled.ul`
   margin: 0;
   padding: 8px;
   position: absolute;
-  left: 50%;
+  width: 360px;
+  text-align: center;
   top: 10%;
   font-size: 1.2rem;
   font-family: "Marcellus SC", serif;
@@ -98,6 +89,11 @@ export const Input = styled.input`
     color: #fefae0;
   }
 
+  &:focus ~ ${AutocompleteWrapper} {
+    opacity: 1;
+    visibility: visible;
+  }
+
   &:hover {
     outline: none;
     border-color: #283618;
@@ -108,11 +104,6 @@ export const Input = styled.input`
     animation: justshake 0.3s forwards;
     color: red;
     font-weight: 600;
-  }
-
-  &:focus ~ ${AutocompleteWrapper} {
-    opacity: 1;
-    visibility: visible;
   }
 
   &:valid ~ ${CloseButton} {
@@ -138,4 +129,11 @@ export const Input = styled.input`
       transform: translateX-(5px);
     }
   }
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-flow: row;
+  justify-content: start;
+  align-items: center;
 `;
