@@ -11,6 +11,7 @@ const initialState = {
   country: {},
   countriesFiltered: [],
   status: "Idle",
+  countryStatus: "Idle",
   error: null,
   selectedContinent: "",
   selectedActivity: "",
@@ -31,6 +32,19 @@ export const fetchCountriesByName = createAsyncThunk(
   async (name) => {
     try {
       const response = (await axios.get(COUNTRIES_BY_NAME + name)).data;
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  }
+);
+
+export const fetchCountriesByAlpha_Code = createAsyncThunk(
+  "/country/alpha_code",
+  async (alpha_code) => {
+    try {
+      const response = (await axios.get(COUNTRIES_BY_CODE + alpha_code)).data;
       return response;
     } catch (error) {
       console.log(error);
@@ -134,6 +148,18 @@ const countriesSlice = createSlice({
         state.status = "Failed";
         state.error = action.error.message;
       })
+      .addCase(fetchCountriesByAlpha_Code.pending, (state, action) => {
+        state.countryStatus = "Loading";
+      })
+      .addCase(fetchCountriesByAlpha_Code.fulfilled, (state, action) => {
+        state.countryStatus = "Succeeded";
+
+        state.country = action.payload.data;
+      })
+      .addCase(fetchCountriesByAlpha_Code.rejected, (state, action) => {
+        state.countryStatus = "Failed";
+        state.error = action.error.message;
+      })
       .addCase(fetchCountriesByName.pending, (state, action) => {
         state.status = "Loading";
       })
@@ -141,6 +167,7 @@ const countriesSlice = createSlice({
         state.status = "Succeeded";
 
         state.countriesFiltered = action.payload.data;
+        state.country = action.payload.data;
       });
   },
 });
@@ -149,9 +176,11 @@ export const selectAllCountries = (state) => state.countries.countries;
 export const getAllCountriesFiltered = (state) =>
   state.countries.countriesFiltered;
 export const getCountriesStatus = (state) => state.countries.status;
+export const getCountryStatus = (state) => state.countries.countryStatus;
 export const getCountriesError = (state) => state.countries.error;
 export const selectedActivity = (state) => state.countries.selectedActivity;
 export const selectedContinent = (state) => state.countries.selectedContinent;
+export const getCountryDetail = (state) => state.countries.country;
 export const {
   clean,
   orderByName,
